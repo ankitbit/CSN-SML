@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "metric_value<-English_collection_dependency_tree_metrics\nmetric_value<- metric_value[order(metric_value$node), ]\nplot(log(metric_value$node), log(metric_value$mean_edge_length))\n\n",
+    "created" : 1514998329207.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2339300465",
+    "id" : "FEF09C5F",
+    "lastKnownWriteTime" : 1515015590,
+    "last_content_update" : 1515015590660,
+    "path" : "~/CSN_SML/model_fitting.R",
+    "project_path" : "model_fitting.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
