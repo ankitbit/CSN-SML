@@ -6,3 +6,7 @@ This project is a part of an attempt to explore properties of languages from the
 * Preparation of a ***script for producing summary statistics*** such as ***sample size***, ***mean*** and ***standard deviation*** of ***sentence length (n) of syntactic dependency tree*** of each language and ***mean*** and ***standard deviation*** of the metric ***mean edge length*** for all sentences in a given language for each of the languages. 
 * Fitting of models 
 
+
+## Pending objectives
+* Model fitting for each of the models
+* Uisng aggregate and defining data filters
