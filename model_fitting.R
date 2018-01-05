@@ -35,32 +35,82 @@ nonlinear_model = nls(mean_edge_length~a*node^b,data=metric_value,
 
 
 
-model_1<- function(dat){
+model_1<- function(dat, variant=){
   linear<- lm(log(mean_edge_length) ~ log(node), dat)
-  inter = -(linear$coefficients[1]/log(2))
-  
-  ######## model 1 #######
-  # formula1 = function(n, b) (n/2)^b 
-  # b*log(n) - b*log(2)
-  b1_init<- inter
+  b1_init<- -(linear$coefficients[1]/log(2))
   mod1 = nls(mean_edge_length ~ (node/2)^b, dat, start = list(b = b1_init), trace = FALSE)
-  
   return(mod1)
 }
 
+model_1_plus <- function(dat){
+  linear<- lm(log(mean_edge_length) ~ log(node), dat)
+  b1p_init = -(linear$coefficients[1]/log(2))
+  d1p_init = 0
+  mod1p = nls(mean_edge_length ~ (node/2)^b + d, data =  dat,
+              start = list(b = b1p_init, d = d1p_init), trace = T)
+  
+  return(mod1p) 
+}
+
+model_2<- function(dat){
+  linear =  lm(log(mean_edge_length) ~ log(node), dat)
+  b2_init = linear$coefficients[2]
+  a2_init = exp(linear$coefficients[1])
+  mod2 = nls(mean_edge_length ~ a*(node^b), dat,
+             start = list(a = a2_init, b = b2_init), trace = FALSE)
+  return(mod2)
+}
+
+model_2_plus <- function(dat){
+  linear<-lm(log(mean_edge_length) ~ log(node), dat)
+  b2p_init = linear$coefficients[2]
+  a2p_init = exp(linear$coefficients[1])
+  d2p_init = 1.5   # seems that 1.5 work well with almost all the languages (Chinese critic language)
+  
+  mod2p = nls(mean_edge_length ~ a * node^b + d, dat,
+              start = list(a = a2p_init, b = b2p_init, d = d2p_init), trace = FALSE)
+  return(mod2p)
+}
+
+model_3<- function(dat){
+  linear<- lin(dat)
+  c3_init = linear$coefficients[2]
+  a3_init = exp(linear$coefficients[1])
+  
+  mod3 = nls(mean_edge_length ~ a * exp(c*node), dat,
+             start = list(a = a3_init, c= c3_init), trace = TRUE)
+  return(mod3)
+}
+
+lin<-function(dat) {
+  lin.mod<-lm(log(mean_edge_length) ~ (node), dat)
+  return(lin.mod)
+}
+
+model_4<-function(dat){
+  
+}
+
+
+library(readr)
 driver_model_fitting<- function(){
   
+  AIC_score<-numeric(length = length(lang_dict))
   #for each of the languages
   for(i in seq(lang_dict)){
-    metric_value <- read_delim("~/CSN_SML/metric_data/Arabic_collection_dependency_tree_metrics.txt", 
+    metric_value <- read_delim(paste( paste("~/CSN_SML/metric_data", lang_dict[i], sep = "/"), 
+                                      "collection_dependency_tree_metrics.txt", sep = "_"), 
                                "\t", escape_double = FALSE, trim_ws = TRUE)
     
-    mod1<-model_1()
+    mod2<-model_2(metric_value)
+    AIC_score[i]<-AIC(mod2)
   }
 }
 
-paste( paste("~/CSN_SML/metric_data/", lang_dict[1], sep = "/"), 
-       "collection_dependency_tree_metrics.txt", sep = "_")
+
+
+
+
 
 
 
