@@ -82,13 +82,36 @@ model_3<- function(dat){
   return(mod3)
 }
 
+
+model_3_plus <- function(dat){
+  linear<- lin(dat)
+  c_init = linear$coefficients[2]
+  a_init = exp(linear$coefficients[1])
+  d_init = 15
+  mod3p = nls(mean_edge_length ~ a * exp(c*node) + d, dat,
+             start = list(a = a_init, c= c_init, d=d_init), trace = TRUE,
+             control =  nls.control(minFactor = 1/(2^40), maxiter = 100000, warnOnly = TRUE))
+  return(mod3p)
+}
+
 lin<-function(dat) {
   lin.mod<-lm(log(mean_edge_length) ~ (node), dat)
   return(lin.mod)
 }
+require(minpack.lm)
 
 model_4<-function(dat){
+  lin.model = lm(formula = exp(mean_edge_length) ~ node,  data = metric_value)
+  b = lin.model$coefficients[1] # intercept
+  m = lin.model$coefficients[2] # slope
   
+  initial.a = lin.model$coefficients[2]
+  initial.d = lin.model$coefficients[1]
+  
+  model.4 = nlsLM(formula = mean_edge_length ~ a*log(node),
+    data = metric_value, start = list(a = initial.a, d = initial.d),
+    trace = FALSE)
+  return(model.4)
 }
 
 
@@ -106,7 +129,7 @@ driver_model_fitting<- function(){
     AIC_score[i]<-AIC(mod2)
   }
 }
-
+metric_val_ord<- metric_value[order(metric_value$node),]
 
 
 
