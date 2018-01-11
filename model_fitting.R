@@ -101,17 +101,24 @@ lin<-function(dat) {
 }
 require(minpack.lm)
 
+
 model_4<-function(dat){
-  lin.model = lm(formula = exp(mean_edge_length) ~ node,  data = metric_value)
-  b = lin.model$coefficients[1] # intercept
-  m = lin.model$coefficients[2] # slope
-  
+  lin.model = lm(formula = exp(mean_edge_length) ~ node,  data = dat)
+  initial.a = lin.model$coefficients[2]
+  model.4 = nls(formula = mean_edge_length ~ a*log(node),
+                data = dat, start = list(a = initial.a),
+                trace = T)
+  return(model.4)
+}
+
+model_4_plus<-function(dat){
+  lin.model = lm(formula = exp(mean_edge_length) ~ node,  data = dat)
   initial.a = lin.model$coefficients[2]
   initial.d = lin.model$coefficients[1]
   
-  model.4 = nlsLM(formula = mean_edge_length ~ a*log(node),
-    data = metric_value, start = list(a = initial.a, d = initial.d),
-    trace = FALSE)
+  model.4 = nls(formula = mean_edge_length ~ a*log(node) + d,
+    data = dat, start = list(a = initial.a, d = initial.d),
+    trace = T)
   return(model.4)
 }
 
