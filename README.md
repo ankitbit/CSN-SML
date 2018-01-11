@@ -10,3 +10,7 @@ This project is a part of an attempt to explore properties of languages from the
 ## Pending objectives
 * Model fitting for each of the models
 * Uisng aggregate and defining data filters
+* Include results for model 0
+* Create custom function for computing AIC and S^2 and delta AIC
+* Table with the values of the parameters of giving the best fit for each model following the format of Table 3.
+* Visualization
