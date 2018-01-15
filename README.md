@@ -14,3 +14,4 @@ This project is a part of an attempt to explore properties of languages from the
 * Create custom function for computing AIC and S^2 and delta AIC
 * Table with the values of the parameters of giving the best fit for each model following the format of Table 3.
 * Visualization
+* Report writing
