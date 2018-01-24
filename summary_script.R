@@ -243,4 +243,5 @@ compute_AIC<- function(lang_dict) {
 bengali<- compute_mean_edge(lang_dict,3)
 
 
->>>>>>> 07361e04203c610b72a5fff112db0e898bf9ba61
+## Model Summary on aggregated data
+generate_aggregate<-funct
