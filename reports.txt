@@ -1,0 +1,13 @@
+Introduction: 
+
+Discuss the issue of homoscedasticity
+Examine visually in case one model is not the best one
+Fit the data and produce results on aggregate data
+
+Do the two ways of fitting the models by giving the initial values produce smae results in terms of error? 
+Use the situation where same models
+
+Genetic algorithms for initial values
+
+
+stratif
